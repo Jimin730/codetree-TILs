@@ -22,13 +22,21 @@ public class Main {
 
             switch(s){
                 case "L": //뒤로 한 번 이동
-                    it.previous();
-                    break;
+                    if(it.hasPrevious()){
+                        it.previous();
+                        break;
+                    } else {
+                        break;
+                    }
                 
                 case "R": //앞으로 한 번 이동
-                    it.next();
-                    break;
-                
+                    if(it.hasNext()){
+                        it.next();
+                        break;
+                    } else {
+                        break;
+                    }
+                    
                 case "P": //해당 위치에 문자 추가
                     it.add(sc.next().charAt(0));
                     break;
