@@ -42,9 +42,14 @@ public class Main {
                     break;
                 
                 case "D": //해당 위치 뒤에 있는 원소 삭제
-                    it.next();
-                    it.remove(); //remove()는 반드시 next() 수행 후 이용 가능
-                    break;
+                    if(it.hasNext()){
+                        it.next();
+                        it.remove(); //remove()는 반드시 next() 수행 후 이용 가능
+                        break;
+                    } else {
+                        break;
+                    }
+                    
             }
         }
 
