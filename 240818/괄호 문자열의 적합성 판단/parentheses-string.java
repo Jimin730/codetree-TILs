@@ -7,6 +7,7 @@ public class Main {
         Stack<Character> s = new Stack<>();
 
         String str = sc.next();
+        int count = 0;
 
         for(int i=0; i<str.length(); i++){
             char c = str.charAt(i);
@@ -20,14 +21,15 @@ public class Main {
                 }
                 s.pop();
             }
+
+            count++;
         }
 
         if(s.isEmpty() == false){
             System.out.println("No");
-        } else {
+        } else if(s.isEmpty() == true && count == str.length()){
             System.out.println("Yes");
         }
-
 
     }
 }
