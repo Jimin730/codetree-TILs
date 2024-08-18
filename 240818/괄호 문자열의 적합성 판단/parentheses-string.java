@@ -13,10 +13,11 @@ public class Main {
 
             if(c == '('){
                 s.push(c);
-            } else if (s.isEmpty() == true && c == ')'){
-                System.out.println("No");
-                break;
             } else {
+                if(s.isEmpty() == true){
+                    System.out.println("No");
+                    break;
+                }
                 s.pop();
             }
         }
