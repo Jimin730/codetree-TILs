@@ -2,77 +2,58 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static int n;
-    public static int m;
+    public static int n, m;
     public static int[][] grid;
+    public static int[] seq; //한 줄씩 보기 위한 배열
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         n = sc.nextInt();
         m = sc.nextInt();
         grid = new int[n][n];
+        seq = new int[n];
 
+        //격자 크기만큼 입력 받기
         for(int i=0; i<n; i++){
             for(int j=0; j<n; j++)
                 grid[i][j] = sc.nextInt();
         }
 
-        int happyNum = findHappySeq();
+        int happyNum = 0;
+
+        // 가로 수열 
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                seq[j] = grid[i][j];
+            }
+
+            if(findHappySeq()) happyNum++;
+        }
+
+        // 세로 수열 
+        for(int j=0; j<n; j++){
+            for(int i=0; i<n; i++){
+                seq[i] = grid[i][j];
+            }
+
+            if(findHappySeq()) happyNum++;
+        }
 
         System.out.println(happyNum);
     }
 
-    public static int findHappySeq(){
-        int happyNum = 0;
-        int maxCnt = 0;
-        int tmp = 0;
+    public static boolean findHappySeq(){
         int cnt = 1;
+        int maxCnt = 0;
 
-        for(int i=0; i<n; i++){
-            //열 기준
-            tmp = 0;
-            cnt = 1; //몇 개가 연속되어 있는지 확인을 위한 변수
-            maxCnt = 0;
-            for(int col=0; col<n; col++){
-                if(tmp == 0) { //비교값이 아직 없을 경우
-                    tmp = grid[i][col]; //비교할 값에 현재 값을 넣어주고 다음 반복문 실행
-                    continue;
-                } 
-                else {
-                    if(tmp == grid[i][col]) cnt++; //비교할 값과 현재 값이 같다면 cnt값 증가
-                    else if(tmp != grid[i][col]){ //비교할 값과 현재 값이 같지 않다면 (연속되지 않다면)
-                        tmp = grid[i][col]; //현재 값으로 비교할 값 초기화
-                        cnt = 1; //1로 다시 초기화
-                    }
-                }
-                maxCnt = Math.max(maxCnt, cnt);
-            }
+        for(int i=1; i<n; i++){
+            if(seq[i-1]==seq[i]) cnt++; //같은 수가 연속되면 cnt++
+            else cnt = 1; //연속되지 않으면 1로 초기화
 
-            if(maxCnt/m >= 1) happyNum++;
-
-            tmp = 0;
-            cnt = 1;
-            maxCnt = 0;
-            //행 기준
-            for(int row=0; row<n; row++){
-                if(tmp == 0) { //비교값이 아직 없을 경우
-                    tmp = grid[row][i]; //비교할 값에 현재 값을 넣어주고 다음 반복문 실행
-                    continue;
-                } 
-                else {
-                    if(tmp == grid[row][i]) cnt++; //비교할 값과 현재 값이 같다면 cnt값 증가
-                    else if(tmp != grid[row][i]){ //비교할 값과 현재 값이 같지 않다면 (연속되지 않다면)
-                        tmp = grid[row][i]; //현재 값으로 비교할 값 초기화
-                        cnt = 1; //1로 다시 초기화
-                    }
-                }
-
-                maxCnt = Math.max(maxCnt, cnt); 
-            }
-
-            if(maxCnt/m >= 1) happyNum++;
+            maxCnt = Math.max(maxCnt, cnt); //반복문 한번 진행될 때마다 cnt 최댓값 갱신
         }
 
-        return happyNum;
+        //최대 연속 횟수가 m이상이면 true
+        return maxCnt >= m;
     }
 }
