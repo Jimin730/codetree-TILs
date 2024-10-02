@@ -18,16 +18,24 @@ public class Main {
 
         int maxResult = 0;
 
-        //일자 블럭 가로, 세로 두가지 경우 실행
+        //일자 블럭 가로 경우 실행
         for(int row = 0; row < n; row++){
             for(int col = 0; col < m; col++){
-                if(row+2 >= n || col+2 >= m) continue;
+                if(col+2 >= m) continue;
 
                 //블럭 가로
                 int sum = getMaxSumBlock1(row, col, col+2);
                 maxResult = Math.max(maxResult, sum);
+            }
+        }
+
+        //일자 블럭 세로 경우 실행
+        for(int row = 0; row < n; row++){
+            for(int col = 0; col < m; col++){
+                if(row+2 >= n) continue;
+
                 //블럭 세로
-                sum = getMaxSumBlock2(col, row, row+2);
+                int sum = getMaxSumBlock2(col, row, row+2);
                 maxResult = Math.max(maxResult, sum);
             }
         }
